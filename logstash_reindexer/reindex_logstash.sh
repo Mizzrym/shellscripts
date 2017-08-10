@@ -35,12 +35,12 @@ for index in $indices ; do
 	out=`curl -s -X POST "${cstr}/_reindex?pretty" -H 'Content-Type: application/json' -d"${json}"`
 	if [ `echo $out | grep '"failures" : \[ \]' | wc -l` -eq 1 ] ; then 
 		echo "success, deleting old index"
-		curl -XDELETE "localhost:9200/${index}?pretty"
+		curl -XDELETE "${cstr}/${index}?pretty"
 	else
 		if [ "$safemode" -eq 0 ] ; then 
 			echo "failed, deleting nontheless" 
 			echo $out
-			curl -XDELETE "localhost:9200/${index}?pretty"
+			curl -XDELETE "${cstr}/${index}?pretty"
 		else
 			echo "failed"
 			echo $out
