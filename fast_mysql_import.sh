@@ -86,6 +86,12 @@ if ! echo ";" | mysql -A ${mysqlopts} ; then
 	exit 1
 fi
 
+# verify dependencies
+if ! hash parallel 2>/dev/null ; then
+	echo "[FAIL] Dependency missing: parallel"
+	exit 1
+fi
+
 # start out clean
 echo "DROP DATABASE IF EXISTS ${dbname} ; CREATE DATABASE ${dbname}" | mysql -A ${mysqlopts}
 
